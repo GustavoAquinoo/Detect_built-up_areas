@@ -1,7 +1,1 @@
 streamlit
-ultralytics
-PIL
-numpy
-io
-time
-os
