@@ -89,49 +89,16 @@ iou = st.sidebar.slider("IoU Threshold", 0.1, 0.9, 0.45)
 st.sidebar.markdown("---")
 st.sidebar.info("Ajusta los valores según la sensibilidad que necesites.")
 
+uploaded_file = st.file_uploader("Sube una imagen JPG o PNG", type=["jpg", "jpeg", "png"])
+
 
 #PROCESO DE DETECCIÓN
-uploaded_file = st.file_uploader(
-    "Sube una imagen JPG o PNG", 
-    type=["jpg", "jpeg", "png"], 
-    key="file_uploader_input"
-)
 
-###tomar foto
-cam_option = st.selectbox(
-    "Selecciona la cámara:",
-    ["📷 Cámara trasera", "🤳 Cámara frontal"]
-)
+if uploaded_file:
 
-if cam_option == "📷 Cámara trasera":
-    facing = "environment"
-else:
-    facing = "user"
-
-st.markdown(f"""
-<script>
-navigator.mediaDevices.getUserMedia({{ video: {{ facingMode: "{facing}" }} }});
-</script>
-""", unsafe_allow_html=True)
-
-
-image_photo = st.camera_input(
-    "O toma una foto con tu cámara",
-    key="camera_input"
-)
-
-if uploaded_file is not None:
-    img = Image.open(uploaded_file)
-
-elif image_photo is not None:
-    img = Image.open(image_photo)
-
-else:
-    img = None
-
-
-if img:
+    img = Image.open(uploaded_file).convert("RGB")
     img_array = np.array(img)
+
     tab1, tab2 = st.tabs(["📤 Imagen Original", "📡 Detección con YOLO"])
 
     # ---------------- TAB 1 -------------------
@@ -168,6 +135,7 @@ if img:
             file_name="imagen_procesada.png",
             mime="image/png"
         )
+
 
 
 
