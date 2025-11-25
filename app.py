@@ -97,6 +97,24 @@ uploaded_file = st.file_uploader(
     key="file_uploader_input"
 )
 
+###tomar foto
+cam_option = st.selectbox(
+    "Selecciona la cámara:",
+    ["📷 Cámara trasera", "🤳 Cámara frontal"]
+)
+
+if cam_option == "📷 Cámara trasera":
+    facing = "environment"
+else:
+    facing = "user"
+
+st.markdown(f"""
+<script>
+navigator.mediaDevices.getUserMedia({{ video: {{ facingMode: "{facing}" }} }});
+</script>
+""", unsafe_allow_html=True)
+
+
 image_photo = st.camera_input(
     "O toma una foto con tu cámara",
     key="camera_input"
@@ -150,6 +168,7 @@ if img:
             file_name="imagen_procesada.png",
             mime="image/png"
         )
+
 
 
 
