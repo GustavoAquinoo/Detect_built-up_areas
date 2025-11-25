@@ -78,18 +78,28 @@ model = load_model()
 #INTERFAZ PRINCIPAL
 
 st.image("logo.png")
-st.title("🔍 Detección de manzanas con imágenes satelitales (GRUPO 2)")
-st.write("Sube una imagen satelital y visualiza las detecciones de manzanas realizadas.")
+st.title("🛰️ Detección de manzanas con imágenes satelitales (GRUPO 2)")
+st.write("Herramienta avanzada de **Visión por Computadora** para la identificación automática de estructuras (manzanas) en imágenes satelitales.")
 
 
 # Sidebar moderna
-st.sidebar.title("⚙️ Configuración del modelo")
-conf = st.sidebar.slider("Confidence Threshold", 0.1, 0.9, 0.5)
-iou = st.sidebar.slider("IoU Threshold", 0.1, 0.9, 0.45)
-st.sidebar.markdown("---")
-st.sidebar.info("Ajusta los valores según la sensibilidad que necesites.")
+st.sidebar.title("⚙️ Configuración")
+st.sidebar.markdown("**Ajustes de Detección**")
 
-uploaded_file = st.file_uploader("Sube una imagen JPG o PNG", type=["jpg", "jpeg", "png"])
+conf = st.sidebar.slider("Umbral de Confianza (Confidence)", 0.1, 0.9, 0.5)
+iou = st.sidebar.slider("Umbral IoU (Intersection over Union)", 0.1, 0.9, 0.45)
+st.sidebar.markdown("---")
+st.sidebar.info("💡 **Umbral de Confianza (Conf):** Mínimo necesario para aceptar una detección. Más alto = más estricto.\n\n💡 **Umbral IoU:** Cuánto deben superponerse las cajas para considerarse la misma detección. Más bajo = más cajas permitidas.")
+
+
+# --- ENTRADA DE IMAGEN ---
+
+st.header("Carga la Imagen 🗺️")
+st.markdown("⚠️ **Importante:** La imagen de entrada **debe** ser una **vista satelital** (mapa) para que la detección de manzanas funcione correctamente.")
+st.markdown("---") # Separador visual
+
+
+uploaded_file = st.file_uploader("📂 Sube una imagen satelital JPG o PNG", type=["jpg", "jpeg", "png"])
 
 
 #PROCESO DE DETECCIÓN
@@ -99,7 +109,7 @@ if uploaded_file:
     img = Image.open(uploaded_file).convert("RGB")
     img_array = np.array(img)
 
-    tab1, tab2 = st.tabs(["📤 Imagen Original", "📡 Detección con YOLO"])
+    tab1, tab2 = st.tabs(["📤 Imagen Original", "📡 Resultados de Detección"])
 
     # ---------------- TAB 1 -------------------
     with tab1:
@@ -135,6 +145,7 @@ if uploaded_file:
             file_name="imagen_procesada.png",
             mime="image/png"
         )
+
 
 
 
