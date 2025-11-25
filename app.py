@@ -90,11 +90,6 @@ st.sidebar.markdown("---")
 st.sidebar.info("Ajusta los valores según la sensibilidad que necesites.")
 
 
-uploaded_file = st.file_uploader("Sube una imagen JPG o PNG", type=["jpg", "jpeg", "png"])
-
-
-
-
 #PROCESO DE DETECCIÓN
 uploaded_file = st.file_uploader(
     "Sube una imagen JPG o PNG", 
@@ -155,6 +150,7 @@ if img:
             file_name="imagen_procesada.png",
             mime="image/png"
         )
+
 
 
 
