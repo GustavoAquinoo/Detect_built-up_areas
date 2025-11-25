@@ -96,12 +96,29 @@ uploaded_file = st.file_uploader("Sube una imagen JPG o PNG", type=["jpg", "jpeg
 
 
 #PROCESO DE DETECCIÓN
+uploaded_file = st.file_uploader(
+    "Sube una imagen JPG o PNG", 
+    type=["jpg", "jpeg", "png"], 
+    key="file_uploader_input"
+)
 
-if uploaded_file:
+image_photo = st.camera_input(
+    "O toma una foto con tu cámara",
+    key="camera_input"
+)
 
+if uploaded_file is not None:
     img = Image.open(uploaded_file)
-    img_array = np.array(img)
 
+elif image_photo is not None:
+    img = Image.open(image_photo)
+
+else:
+    img = None
+
+
+if img:
+    img_array = np.array(img)
     tab1, tab2 = st.tabs(["📤 Imagen Original", "📡 Detección con YOLO"])
 
     # ---------------- TAB 1 -------------------
@@ -138,5 +155,6 @@ if uploaded_file:
             file_name="imagen_procesada.png",
             mime="image/png"
         )
+
 
 
